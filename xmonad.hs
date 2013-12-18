@@ -96,7 +96,7 @@ main = do
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "green" "" . wrap "<" ">"
                         } 
-         , XMonad.workspaces  = ["1:term","2:web","3:mail", "4", "5", "6"]
+         , XMonad.workspaces  = ["1:term","2:web","3", "4", "5", "6"]
          , modMask = mod4Mask
         } `additionalKeys`
         [((controlMask, xK_Print), spawn "sleep 0.2; scrot -s -e 'mv $f ~/Pictures/screenshots/ &&  display ~/Pictures/screenshots/$f'")
@@ -145,10 +145,10 @@ main = do
           ,("<F12>", spawn "gnome-screenshot")
           ,("<F11>", spawn "gnome-screenshot -a")
           -- Sound 
-          ,("<XF86AudioRaiseVolume>", spawn "amixer -c 0 set Master 5dB+")
-          ,("<XF86AudioLowerVolume>", spawn "amixer -c 0 set Master 5dB-")
-          ,("<XF86AudioMute>", spawn "amixer -q sset Master toggle")
+          ,("<XF86AudioRaiseVolume>", spawn "amixer -c 0 set Master 5dB+ &&  notify-send -a Volume Volume `amixer get Master | egrep -o \"[0-9]+%\" | uniq`")
+          ,("<XF86AudioLowerVolume>", spawn "amixer -c 0 set Master 5dB- && notify-send -a Volume Volume `amixer get Master | egrep -o \"[0-9]+%\" | uniq`")
+          ,("<XF86AudioMute>", spawn "amixer -q sset Master toggle && notify-send -a Volume Volume`amixer get Master | egrep -o '(\\[on\\]|\\[off\\])' | uniq`")
           -- Eject Button
-          ,("<XF86Eject>", spawn "eject")
+          ,("<XF86Eject>", spawn "eject&&notify-send Ejecting")
 
           ] 
